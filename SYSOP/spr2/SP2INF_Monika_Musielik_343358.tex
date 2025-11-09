@@ -1,0 +1,213 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{multicol}
+
+\newcommand{\rysunek}[4]{
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=#2\textwidth]{#1}
+    \caption{#3}
+    \label{fig:#4}
+\end{figure}
+}
+
+\title{Sprawozdanie z ćwiczenia 2. Badanie usług katalogowych eDirectory w oparciu o oprogramowanie klienta sieci OES
+zainstalowanego w systemie Microsoft Windows}
+\author{Monika Musielik}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Cel ćwiczenia}
+Celem ćwiczenia jest dokonanie badania dostępnych usług katalogowych eDirectory drzewa 'ZET\_TREE' w kontekście 'zet'. Usługi te dostępne są dzięki oprogramowaniu klienta sieci OES.
+
+\section{Badanie mechanizmu mapowania zasobów usług katalogowych}
+
+\rysunek{zdj/1.png}{0.4}{Menu kontekstowe OES Client}{1}
+\rysunek{zdj/2.png}{0.6}{Mapowanie katalogu przy użyciu ZET\_TREE. OES Client $\rightarrow$ Mapowanie dysku sieciowego OES\dots}{2}
+\rysunek{zdj/3.png}{0.6}{Mapowanie katalogu przy użyciu O18. OES Client $\rightarrow$ Mapowanie dysku sieciowego OES\dots}{3}
+
+\section{Badanie przyłączonych katalogów sieciowych do napędów logicznych}
+
+\rysunek{zdj/4.png}{0.8}{Zmapowane zasoby w formie lokalizacji sieciowych}{4}
+\rysunek{zdj/5.png}{0.8}{Skrypt logowania z zaznaczoną częscią mapowania zasobów. Eksplorator plików $\rightarrow$ ZET\_TREE $\rightarrow$ Edytuj skrypt logowania kontenera eDir\dots}{5}
+
+\section{Mechanizm kopiowania NetWare}
+
+\rysunek{zdj/6.png}{0.6}{Menu kontekstowe OES Client $\rightarrow$ Programy narzędziowe OES $\rightarrow$ Kopiowanie OES}{6}
+\rysunek{zdj/7.png}{0.4}{Kopiowanie plików używając OES}{7}
+
+\section{System komunikatorów}
+
+\rysunek{zdj/8.png}{0.3}{Menu kontekstowe OES Client $\rightarrow$ Programy narzędziowe OES $\rightarrow$ Wyślij wiadomość}{8}
+\rysunek{zdj/9.png}{0.4}{Pole wysyłania widomości}{9}
+\rysunek{zdj/10.png}{0.4}{Potwierdzenie wysłania}{10}
+
+\section{Rekordy baz danych usług katalogowych}
+
+\rysunek{zdj/12.png}{0.5}{Menu kontekstowe OES Client $\rightarrow$ Zarządzanie użytkownikami dla ZET\_TREE}{12}
+
+\begin{multicols}{2}
+\rysunek{zdj/13_a.png}{0.5}{Informacje o użytkowniku}{13a}
+\rysunek{zdj/13_b.png}{0.4}{Informacje o miejscu pracy}{13b}
+\rysunek{zdj/13_c.png}{0.4}{Informacje o pocztowe}{13c}
+\rysunek{zdj/13_d.png}{0.4}{Edytowanie skryptu logowania}{13d}
+\rysunek{zdj/13_e.png}{0.4}{Informacje o logowania dla konta}{13e}
+\rysunek{zdj/13_f.png}{0.4}{Administrowanie hasłem użytkownika}{13f}
+\rysunek{zdj/13_g.png}{0.4}{Członkostwo grupy}{13g}
+\end{multicols}
+
+\section{Prawa zasobów}
+
+\begin{multicols}{2}
+\rysunek{zdj/14.png}{0.4}{Prawa dysponenta dysku F:}{14}
+\rysunek{zdj/15.png}{0.4}{Prawa dysponenta dysku F: wynikające z dziedziczenia}{15}
+\end{multicols}
+
+\begin{multicols}{2}
+\rysunek{zdj/16_a.png}{0.4}{Prawa dysponenta dysku Z:}{16a}
+\rysunek{zdj/16_b.png}{0.4}{Prawa dysponenta dysku Z: wynikające z dziedziczenia}{16b}
+\end{multicols}
+
+\begin{multicols}{2}
+\rysunek{zdj/16_c.png}{0.4}{Prawa dysponenta U:/STUD}{16c}
+\rysunek{zdj/16_d.png}{0.4}{Prawa dysponenta U:/STUD wynikające z dziedziczenia}{16d}
+\end{multicols}
+
+\newpage
+
+\begin{multicols}{2}
+\rysunek{zdj/16_e.png}{0.4}{Prawa dysponenta X:/TEMP}{16e}
+\rysunek{zdj/16_f.png}{0.4}{Prawa dysponenta X:/TEMP wynikające z dziedziczenia}{16f}
+\end{multicols}
+
+\begin{multicols}{2}
+\rysunek{zdj/16_g.png}{0.4}{Prawa dysponenta X:/TMP}{16g}
+\rysunek{zdj/16_h.png}{0.4}{Prawa dysponenta X:/TMP wynikające z dziedziczenia}{16h}
+\end{multicols}
+
+\begin{multicols}{2}
+\rysunek{zdj/16_i.png}{0.4}{Prawa dysponenta X:/WZORCE}{16i}
+\rysunek{zdj/16_j.png}{0.4}{Prawa dysponenta X:/WZORCE wynikające z dziedziczenia}{16j}
+\end{multicols}
+
+\newpage
+
+\begin{multicols}{2}
+\rysunek{zdj/16_k.png}{0.4}{Prawa dysponenta Y:/FTP}{16k}
+\rysunek{zdj/16_l.png}{0.4}{Prawa dysponenta Y:/FTP wynikające z dziedziczenia}{16l}
+\end{multicols}
+
+\section{Nadawanie praw innym użytkownikom}
+
+\rysunek{zdj/18.png}{0.4}{Dodawanie praw innemu użytkownikowi. Prawa dysponenta $\rightarrow$ Dodaj}{18}
+
+\newpage
+
+\section{Właściwości serwera, wolumenu, katalogu i pliku}
+
+\begin{multicols}{3}
+
+\rysunek{zdj/19.png}{0.3}{Właściwości serwera}{19}
+\rysunek{zdj/20.png}{0.3}{Statystyka wolumenu}{20}
+\rysunek{zdj/21.png}{0.3}{Informacje o wolumenie}{21}
+\rysunek{zdj/21_a.png}{0.3}{Właściwości katalogu}{21_a}
+\rysunek{zdj/22.png}{0.3}{Właściwości pliku}{22}
+
+\end{multicols}
+
+\section{Mechnizm odzyskiwania danych}
+
+\rysunek{zdj/23.png}{0.3}{Menu kontekstowe z odzyskiwaniem danych}{23}
+
+\begin{multicols}{2}
+\rysunek{zdj/24.png}{0.5}{Likwidowanie danych}{24}
+\rysunek{zdj/25.png}{0.5}{Odzyskiwanie danych}{25}
+\end{multicols}
+
+W obu oknach są dostępne następujące parametry: nazwa pliku; data i godzina usunięcia; rozmiar pliku; osoba usuwająca; data ostatniej aktualizacji; nazwa ostatniej osoby aktualizującej; data i godzina utworzenia; nazwa właściciela; data i godzina archiwizacji; nazwa archiwizatora; data ostatniego użycia
+
+\section{Modyfikowanie loginu startowego}
+
+\rysunek{zdj/27.png}{0.4}{Uzupełniony skrypt logowania}{27}
+
+\begin{multicols}{2}
+\rysunek{zdj/28.png}{0.5}{Zmienne środowiskowe}{28}
+\rysunek{zdj/29.png}{0.5}{Zmapowany dysk SPRAWOZDANIE}{29}
+\end{multicols}
+
+\section{Właściwości i paramtery domyślnego profilu logowania}
+
+\begin{multicols}{2}
+\rysunek{zdj/30.png}{0.4}{eDirectory}{30}
+\rysunek{zdj/31.png}{0.4}{Skrypt}{31}
+\rysunek{zdj/32.png}{0.4}{Windows}{32}
+\rysunek{zdj/33.png}{0.4}{Usługi NMAS}{33}
+\rysunek{zdj/34.png}{0.4}{802.1X}{34}
+\end{multicols}
+
+\section{Lista drukarek}
+
+\rysunek{zdj/37.png}{0.6}{Lista drukarek w iPrint}{37}
+\rysunek{zdj/38.png}{0.6}{Lista drukarek w Ustawieniach Windows}{38}
+
+\newpage
+
+\section{Paramenty zainstalowanej usługi drukowania sieciowego}
+
+\begin{multicols}{2}
+\rysunek{zdj/39.png}{0.4}{Ustawienia iPrint}{39}
+\rysunek{zdj/40.png}{0.4}{O programie}{40}
+\rysunek{zdj/41.png}{0.4}{Hasła}{41}
+\rysunek{zdj/42.png}{0.4}{Potwierdzenie}{42}
+\end{multicols}
+
+\begin{multicols}{2}
+\rysunek{zdj/43.png}{0.4}{Ogólnie własciwości drukarki}{43}
+\rysunek{zdj/44.png}{0.4}{Ustawienia urządzenia drukarki}{44}
+\end{multicols}
+
+\newpage
+
+\rysunek{zdj/47.png}{0.4}{Właściwości drukarki z iPrint}{47}
+
+\section{Czasy logowania na serwery}
+
+\begin{multicols}{3}
+\rysunek{zdj/48_a.png}{0.3}{o17.iem.pw.edu.pl (11s)}{48a} %R
+\rysunek{zdj/49_a.png}{0.3}{o18.iem.pw.edu.pl (11s)}{49a} %R
+\rysunek{zdj/50_a.png}{0.3}{o19.iem.pw.edu.pl (3s)}{50a}
+\end{multicols}
+
+\begin{multicols}{3}
+\rysunek{zdj/48_b.png}{0.3}{10.42.1.24 (11s)}{48b}
+\rysunek{zdj/49_b.png}{0.3}{10.42.1.25 (9s)}{49b} %R
+\rysunek{zdj/50_b.png}{0.3}{10.42.1.26 (10s)}{50b}
+\end{multicols}
+
+\newpage 
+
+\begin{multicols}{3}
+\rysunek{zdj/48_c.png}{0.3}{o17 (10s)}{48c}
+\rysunek{zdj/49_c.png}{0.3}{o18 (9s)}{49c}
+\rysunek{zdj/50_c.png}{0.3}{o19 (12s)}{50c} %R
+\end{multicols}
+
+\begin{multicols}{2}
+\rysunek{zdj/51.png}{0.4}{Nieistniejący serwer, nie połączono (błąd po minucie)}{51}
+\rysunek{zdj/52.png}{0.4}{Brak serwera, nie połączono (błąd po 20s)}{52}
+\end{multicols}
+
+\section{Własne wrażenia}
+
+Z tych kilku godzin korzystania z eDirectory, przyznam że jest to ciekawe narzędzie które ma wiele praktycznych zastosowań w większych i mniejszych systemach. System jest bogaty w funkcje i ma czytelny interfejs.
+
+\end{document}

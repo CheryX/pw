@@ -1,0 +1,233 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.9}
+
+\lstset{
+  numbers=left,
+  firstnumber=3,
+  numberfirstline=true
+}
+
+\begin{document}
+
+\begin{center}
+  \begin{tabular}{ r | l }
+    \multicolumn{2}{ c }{\large{Politechnika Warszawska}} \\ \hline
+    Tytuł & Test algorytmu qsort.c \\ \hline
+    Autor & Monika Musielik \\ \hline
+    Sprawdzający & dr inż. Piotr Witkowski \\ \hline
+    Data & \today \\ \hline
+  \end{tabular}
+\end{center}
+
+\tableofcontents
+
+\section{Cel projektu}
+
+Celem projektu było odnalezienie i naprawa błędów w algorytmach sortowania przez wstawianie oraz szybkiego sortowania, a następnie udkokumentowanie tego procesu w sprawozdaniu.
+
+\section{Sortowanie przez wstawianie}
+
+W pliku \texttt{insort.c} została napisana błędna funkcja algorytmu sortownia przez wstawianie, po niewielkim sprzątaniu prezentuje się ta funkcja w sposób następujący:
+
+\begin{lstlisting}[language=C]
+void insort(double v[], int n) {
+  int i, j;
+  for (i = 1; i < n; i++) {
+    double tmp = v[j];
+    for (j = i-1; v[j] > tmp, j--)
+      v[j+1] = v[j];
+    v[j+1] = tnp;
+  }
+}
+\end{lstlisting}
+
+Plik niestety się nie kompiluje ze względu na błąd składni w liniach 7 i 9. W linii 7 został zamieniony średnik z przecinkiem, a w linii 9 litera \texttt{n} została zamieniona z literą \texttt{m}. 
+
+Po szybkich naprawach i uruchomieniu programu, można zauważyć, że nie działa on tak jak powinien i nie sortuje tablicy zgodnie z zasadami matematyki, a czasem występuje błąd segmentacji. 
+
+Od razu można było zauważyć błąd w linii 6, używanie zmiennej \texttt{j}, zanim została jej przypisana jakakolwiek wartość. Jest to kolejna literówka, ponieważ do tej zmiennej powinna być przypisywana wartość \texttt{v[i]}, zamiast \texttt{v[j]}.
+
+Program teraz o wiele częściej zwraca poprawnie posortowany wektor, natomiast nadal występują błędy segmentacji, co sugeruje naruszanie ochrony pamięci, czyli brak warunku w którejś z pętl. Pętla \texttt{for} w linii 5 nie powinna \emph{mazać tam, gdzie nie powinna}, ponieważ ma jasno określony zakres operacji. Natomist pętla w linii 7 już nie ma i może zejść poniżej \texttt{j = 0}, dlatego należy dodać warunek który to uniemożliwia.
+
+\begin{lstlisting}[language=C]
+void insort(double v[], int n) {
+  int i, j;
+  for (i = 1; i < n; i++) {
+    double tmp = v[i];
+    for (j = i-1; j >= 0 && v[j] > tmp; j--)
+      v[j+1] = v[j];
+    v[j+1] = tmp;
+  }
+}
+\end{lstlisting}
+
+Po powyższyczh poprawkach funkcja działa zgodnie z założeniami i zwraca poprawne wyniki. Błędy były proste do zlokalizownia i naprawienia głównie przez prostote algorytmu sortowania przez wstawianie.
+
+\section{Szybkie sortowanie}
+
+W pliku \texttt{q\_sort.c} znajdują się 3 funkcje: \texttt{q\_sort}, \texttt{qsort\_rec}, \texttt{divide}. Pierwsze 2 funkcje nie mają błędów, można to łatwo zbadać przez ich prostotę:
+
+\begin{lstlisting}[language=C,firstnumber=33]
+void qsort_rec( double v[], int first, int last ) {
+  if( first < last ) {
+    int m = divide( v, first, last );
+    qsort_rec( v, first, m-1 );
+    qsort_rec( v, m+1, last );
+  }
+}
+
+void q_sort( double v[], int n ) {
+  qsort_rec( v, 0, n-1 );
+}
+\end{lstlisting}
+
+Funkcja \texttt{q\_sort} opakowuje funkcje \texttt{qsort\_rec} ze zmniejszoną wartością $n$ o $1$. Natomist główna funkcja \texttt{qsort\_rec}, jest rekurencyjna i wywołuje funkcje \texttt{divide} która dzieli tablicę.
+
+Program kompiluje się bez zmian, jednak zachodzą w nim błędy przy porównywaniu liczb. Dzięki temu można dojść do wniosku, że błąd pojawia się w funkcji \texttt{divide}. Dla skrócenia funckji dodam prostą funkcje \texttt{swap} zamieniająca między sobą 2 elementy.
+
+\begin{lstlisting}[language=C]
+void swap(double *a, double *b) {
+  double tmp;
+  tmp = *a;
+  *a = *b;
+  *b = tmp;
+}
+\end{lstlisting}
+
+\newpage
+
+Dzięki tej prostej zmianie funkcja dzielenia tablic znacząco poprawiła swoją czytelność i jest prosta w analizowaniu błędu, który nadal się nie zmienił:
+
+\begin{lstlisting}[language=C,firstnumber=10]
+int divide( double v[], int f, int l ) {
+  int s = f;
+  f++;
+
+  while( f < l ) {
+    while( f < l && v[f] < v[s] ) f++;
+    while( f < l && v[l] > v[s] ) l--;
+    if( f < l ) swap(&v[f], &v[l]);
+  }
+
+  swap(&v[s], &v[f]);
+  return f;
+}
+\end{lstlisting}
+
+Po uruchomieniu programu można zauważyć ciekawą rzecz, wektor po przejściu przez tą funkcje nie jest posortowany, jednak po wyświetleniu przykładowej tablicy złożonej z liczb pseudolosowych o $n = 100$ z $v_n \in (-100; 100)$ przeprowadzoną przez funkcję \texttt{q\_sort} można zobaczyć specifyczny kształt danych na wykresie punktowym:
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={indeks tablicy $i \in [0;99]$},
+        ylabel={wartość elementu $v_i \in (-100; 100)$}
+    ]
+      \addplot[only marks, scatter, mark size=2pt]table[]{d.dat};
+    \end{axis}
+  \end{tikzpicture}
+\end{center}
+
+Jak widać tablica jest \emph{prawie} posortowana. Postanowiłam usunąć z wykresu 2 elementy: $v_{56} = 21094$, $v_{58} = 44531$, ponieważ ich wartości sięgają dziesiątki tysięcy, oraz nie posiadają części ułamkowej, co sugeruje naruszanie ochrony pamięci.
+
+Innym prostym błędem jest błędna końcowa zamiana elementu startowego $v_f$ z elementem piwotu $v_s$. Zgodnie z algorytmem szybkiego sortownia element piwotu powinien być zamieniony z \emph{ostatnim elementem wektora}, tak wygląda poprawiona wersja:
+
+\begin{lstlisting}[language=C,firstnumber=20]
+swap(&v[s], &v[l]);
+return l;
+\end{lstlisting}
+
+Można zauważyć na wykresie wyżej inny problem, pojedyńcze wartości są bardzo odchylone od siebie. Jest to spowodowane błędami warunków w liniach $15$ i $16$. Można je poprawić zamieniając operator \texttt{<} na \texttt{<=}
+
+\begin{lstlisting}[language=C,firstnumber=15]
+while( f <= l && v[f] < v[s] ) f++;
+while( f <= l && v[l] > v[s] ) l--;
+\end{lstlisting}
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={indeks tablicy $i \in [0;99]$},
+        ylabel={wartość elementu $v_i \in (-100; 100)$}
+    ]
+      \addplot[only marks, scatter, mark size=2pt]table[]{f.dat};
+    \end{axis}
+  \end{tikzpicture}
+\end{center}
+
+Jak widać ta zmiana bardzo poprawiła algorytm sortowania, który jest coraz bardziej zgodny z założeniami. Nie występują już pojedyńcze punkty które są po przeciwnych stronach sekcji. Jednak algorytm ciągle ma błędy.
+
+Kolejnym błędem jest błędny warunek zakończenia głównej pętli \texttt{while}, ponownie jak w błędzie wyżej należy zamienić operator \texttt{<} na \texttt{<=}.
+
+\begin{lstlisting}[language=C,firstnumber=14]
+while( f <= l ) {
+\end{lstlisting}
+
+Po tej zmianie wydawałoby się, że algorytm już działa poprawnie, ale jeśli w pliku \texttt{test.c} wymuszę aby 2 elementy miały dokładnie taką samą wartość, np. $v_5=10$, $v_6=10$ to program wejdzie w nieskończoną pętle.
+
+Aby naprawić ten błąd należy rozszczerzyć kod w instrukcji warunkowej, tak aby przesuwał wskaźniki $f$ i $l$ oraz kończył w odpowiednim momencie pętle:
+
+\begin{lstlisting}[language=C,firstnumber=17]
+if( f < l ) {
+  swap(&v[f], &v[l]);
+  f++;
+  l--;
+} else break;
+\end{lstlisting}
+
+\newpage
+
+Po wszystkich poprawkach algorytm sortowania działa zgodnie z założeniami i zwraca poprawnie wyniki. W porównaniu do sortowania przez wstawianie, naprawa tego algorytmu była znacznie trudniejsza ze względu na większą złożoność kodu który po wszystkich naprawach wygląda w sposób następujący:
+
+\begin{lstlisting}[language=C,firstnumber=3]
+void swap(double *a, double *b) {
+  double tmp;
+  tmp = *a;
+  *a = *b;
+  *b = tmp;
+}
+
+int divide( double v[], int f, int l ) {
+  int s = f;
+  f++;
+
+  while( f <= l ) {
+    while( f <= l && v[f] < v[s] ) f++;
+    while( f <= l && v[l] > v[s] ) l--;
+    if( f < l ) {
+      swap(&v[f], &v[l]);
+      f++;
+      l--;
+    } else break;
+  }
+
+  swap(&v[s], &v[l]);
+  return l;
+}
+
+void qsort_rec( double v[], int first, int last ) {
+  if( first < last ) {
+    int m = divide( v, first, last );
+    qsort_rec( v, first, m-1 );
+    qsort_rec( v, m+1, last );
+  }
+}
+
+void q_sort( double v[], int n ) {
+  qsort_rec( v, 0, n-1 );
+}
+\end{lstlisting}
+
+\end{document}
