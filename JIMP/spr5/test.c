@@ -1,7 +1,6 @@
-#include "q_sort.h"
+#include "insort.h"
 
-#define MAX_ELEM_2_PRINT 100
-
+#define MAX_ELEM_2_PRINT 10
 #include <stdio.h>  // wiadomo po co
 #include <stdlib.h> // funkcje atoi, malloc i rand
 #include <time.h>   // funkcja time
@@ -35,7 +34,7 @@ main( int argc, char **argv ) {
 	printf( "Wygenerowany wektor: " );
 	printv( v, n );
 
-	q_sort( v, n );
+	insort( v, n );
 	
 	printf( "Posortowany wektor: " );
 	printv( v, n );
